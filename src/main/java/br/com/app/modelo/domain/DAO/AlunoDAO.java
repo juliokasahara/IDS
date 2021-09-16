@@ -9,5 +9,5 @@ import br.com.app.modelo.domain.model.Aluno;
 public interface AlunoDAO extends JpaRepository<Aluno, Long>{
 	
 	List<Aluno> findByNome(String nome);
-	
+
 }

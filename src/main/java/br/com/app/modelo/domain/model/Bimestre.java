@@ -2,6 +2,7 @@ package br.com.app.modelo.domain.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,7 +38,7 @@ public class Bimestre {
 	private Integer frequencia;
 	
 	@JsonManagedReference
-	@OneToMany(fetch = FetchType.LAZY,mappedBy = "bimestre")
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "bimestre",cascade = CascadeType.ALL)
 	private List<Avaliacao> avaliacoes;
 	
 	@JsonBackReference

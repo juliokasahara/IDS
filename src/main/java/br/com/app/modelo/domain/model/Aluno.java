@@ -1,5 +1,6 @@
 package br.com.app.modelo.domain.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,7 +34,7 @@ public class Aluno {
 	private String status;
 	
 	@JsonManagedReference
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_ano_letivo")
 	private AnoLetivo anoLetivo;
 

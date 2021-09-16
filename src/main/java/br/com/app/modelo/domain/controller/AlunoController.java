@@ -57,9 +57,14 @@ public class AlunoController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> replace(@RequestBody AlunoDTO alunoDTO) {
+    public ResponseEntity<Void> update(@RequestBody AlunoDTO alunoDTO) {
     	alunoService.update(alunoDTO);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    
+	@PostMapping(path = "/matricular")
+    public void matricular(@RequestBody @Valid AlunoDTO alunoDTO) {
+		alunoService.matricular(alunoDTO);
     }
 
 }

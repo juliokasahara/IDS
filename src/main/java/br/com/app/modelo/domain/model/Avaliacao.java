@@ -2,6 +2,7 @@ package br.com.app.modelo.domain.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,7 +38,7 @@ public class Avaliacao {
 	private BigDecimal nota;
 	
 	@JsonManagedReference
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_tipo_avaliacao")
 	private TipoAvaliacao tipoAvaliacao;
 	

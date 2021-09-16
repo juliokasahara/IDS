@@ -18,8 +18,10 @@ public interface AlunoService{
 
 	void delete(long id);
 
-	Aluno save(AlunoDTO usuarioDTO);
+	Aluno save(AlunoDTO alunoDTO);
 
-	void update(AlunoDTO usuarioDTO);
+	void update(AlunoDTO alunoDTO);
+	
+	void matricular(AlunoDTO alunoDTO);
 
 }

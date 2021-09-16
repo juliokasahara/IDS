@@ -3,6 +3,7 @@ package br.com.app.modelo.domain.model;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -42,11 +43,11 @@ public class AnoLetivo {
 	private String ano;
 
 	@JsonManagedReference
-	@OneToMany(fetch = FetchType.LAZY,mappedBy = "anoLetivo")
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<Bimestre> bimestres;
 	
 	@JsonBackReference
-	@OneToOne(fetch = FetchType.LAZY,mappedBy = "anoLetivo")
+	@OneToOne(fetch = FetchType.LAZY,mappedBy = "anoLetivo", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Aluno aluno;
 
 	@Transient

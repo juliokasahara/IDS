@@ -10,11 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import br.com.app.modelo.domain.DAO.AlunoDAO;
+import br.com.app.modelo.domain.DAO.AnoLetivoDAO;
 import br.com.app.modelo.domain.DTO.AlunoDTO;
 import br.com.app.modelo.domain.constant.Constants;
 import br.com.app.modelo.domain.exception.BadRequestException;
 import br.com.app.modelo.domain.mapper.AlunoMapper;
 import br.com.app.modelo.domain.model.Aluno;
+import br.com.app.modelo.domain.model.AnoLetivo;
 import br.com.app.modelo.domain.model.Avaliacao;
 import br.com.app.modelo.domain.model.Bimestre;
 import br.com.app.modelo.domain.util.Util;
@@ -25,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class AlunoServiceImpl implements AlunoService{
 	
 	private final AlunoDAO alunoDAO;
+	private final AnoLetivoDAO anoLetivoDAO;
 
 	public Page<Aluno> findAll(Pageable pageable) {
 		
@@ -51,8 +54,8 @@ public class AlunoServiceImpl implements AlunoService{
 	
 	@Transactional(rollbackFor = Exception.class)
 	public Aluno save(AlunoDTO alunoDTO) {
-		
-		return alunoDAO.save(AlunoMapper.INSTANCE.toAluno(alunoDTO));
+		Aluno aluno = AlunoMapper.INSTANCE.toAluno(alunoDTO);
+		return alunoDAO.save(aluno);
 	}
 
 	public void update(AlunoDTO alunoDTO) {
@@ -119,6 +122,20 @@ public class AlunoServiceImpl implements AlunoService{
 			}
 		}
 		return desStatus.toString();
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void matricular(AlunoDTO alunoDTO) {
+		
+		Aluno aluno = AlunoMapper.INSTANCE.toAluno(alunoDTO);
+		AnoLetivo anoLetivo = new AnoLetivo();
+		anoLetivo.setAno(aluno.getAnoLetivo().getAno());
+		anoLetivo = anoLetivoDAO.save(anoLetivo);
+		Aluno alunobanco = alunoDAO.findById(aluno.getIdAluno()).orElseThrow(() -> new BadRequestException("Usuario não existe"));
+		alunobanco.setAnoLetivo(anoLetivo);
+		alunoDAO.save(alunobanco);
+		
 	}
 
 }
